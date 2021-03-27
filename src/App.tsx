@@ -1,32 +1,44 @@
-import { useState } from "react";
+import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/home/Home";
 import Login from "./components/login/Login";
 import "./App.css";
 
-function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+class App extends Component {
+  constructor(props: any) {
+    super(props);
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
+  }
 
-  return (
-    <div className="App">
-      <Switch>
-        <Route path="/login">
-          {loggedIn ? (
-            <Redirect to="/" />
-          ) : (
-            <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          )}
-        </Route>
-        <Route path="/">
-          {loggedIn ? (
-            <Home />
-          ) : (
-            <Redirect to="/login" />
-          )}
-        </Route>
-      </Switch>
-    </div>
-  );
+  state: { loggedIn: boolean } = {
+    loggedIn: !!localStorage.getItem("accessToken"),
+  };
+
+  logIn(accessToken: string) {
+    localStorage.setItem("accessToken", accessToken);
+    this.setState({ loggedIn: true });
+  }
+
+  logOut() {
+    localStorage.removeItem("accessToken");
+    this.setState({ loggedIn: false });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Switch>
+          <Route path="/login">
+            {this.state.loggedIn ? <Redirect to="/" /> : <Login logIn={this.logIn} />}
+          </Route>
+          <Route path="/">
+            {this.state.loggedIn ? <Home logOut={this.logOut} /> : <Redirect to="/login" />}
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

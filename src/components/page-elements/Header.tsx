@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Container,
   Navbar,
@@ -7,22 +6,21 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText,
 } from "reactstrap";
 
-const Header = (props: { userName: string }) => {
-  const { userName } = props;
-  const logInLink = <Link to="/login">Log in</Link>;
-  const logInText = userName ? `Hello, ${userName}` : logInLink;
+function Header(props: { handleLogOut: () => void }) {
+  const { handleLogOut } = props;
 
   return (
-    <div>
-      <Navbar color="secondary" dark expand="md">
+    <header>
+      <Navbar color="dark" dark expand="md">
         <Container>
           <NavbarBrand href="/">@kbpfuckingbot</NavbarBrand>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto nav-pills" navbar>
             <NavItem>
-              <NavLink className="active" href="#">Phones</NavLink>
+              <NavLink className="active" href="#">
+                Phones
+              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#">Birthdays</NavLink>
@@ -31,11 +29,17 @@ const Header = (props: { userName: string }) => {
               <NavLink href="#">Users</NavLink>
             </NavItem>
           </Nav>
-          <NavbarText>{logInText}</NavbarText>
+          <NavLink
+            className="text-light"
+            href="#"
+            onClick={() => handleLogOut()}
+          >
+            Log out
+          </NavLink>
         </Container>
       </Navbar>
-    </div>
+    </header>
   );
-};
+}
 
 export default Header;
