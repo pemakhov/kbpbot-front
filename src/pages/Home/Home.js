@@ -9,9 +9,22 @@ import './Home.css';
 
 const Home = () => {
   const [dataType, setDataType] = useState(PHONES);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ type: PHONES, source: [] });
   const [isLoading, setIsLoading] = useState(true);
   const [apiError, setApiError] = useState(null);
+  const [isEditingId, setIsEditingId] = useState('');
+
+  const edit = (id) => setIsEditingId(id);
+
+  const cancelEditing = (resetValues) => {
+    resetValues();
+    setIsEditingId(() => '');
+  };
+
+  const submitEditing = async (saveData) => {
+    await saveData();
+    setIsEditingId(() => '');
+  };
 
   const loadData = async (type) => {
     try {
@@ -20,7 +33,7 @@ const Home = () => {
       const res = await fetch(`${API_URL}/${type}`);
       const apiData = await res.json();
 
-      setData(apiData);
+      setData(() => ({ type, source: apiData }));
       setIsLoading(() => false);
     } catch (error) {
       setApiError(error.message);
@@ -63,6 +76,7 @@ const Home = () => {
 
   useEffect(() => {
     setApiError(() => null);
+    setIsEditingId(() => '');
     loadData(dataType);
   }, [dataType]);
 
@@ -88,7 +102,16 @@ const Home = () => {
         (
           <div className="apiError text-center">{apiError}</div>
         )}
-      <DataTable data={data} dataType={dataType} deleteItemById={deleteItemById} />
+      <DataTable
+        data={data}
+        setData={setData}
+        deleteItemById={deleteItemById}
+        isEditingId={isEditingId}
+        edit={edit}
+        cancelEditing={cancelEditing}
+        submitEditing={submitEditing}
+        setApiError={setApiError}
+      />
     </div>
   );
 };

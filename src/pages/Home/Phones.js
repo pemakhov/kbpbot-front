@@ -14,8 +14,8 @@ import ModalButton from '../../components/Modal/ModalButton';
 import Modal from '../../components/Modal/Modal';
 
 const Phones = (props) => {
-  const { data, isEditingId, edit, cancelEditing, submitEditing, deleteItemById } = props;
-  const { id, phone, name, department } = data;
+  const { source, isEditingId, edit, cancelEditing, submitEditing, deleteItemById } = props;
+  const { id, phone, name, department } = source;
   const initialFormValues = { id, phone, name, department };
   const active = id === isEditingId;
   const { loggedIn } = useContext(loggedInContext);
@@ -77,7 +77,7 @@ const Phones = (props) => {
                 <input
                   type="text"
                   name="phone"
-                  className="form-control"
+                  className="form-control mx-1"
                   value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -85,7 +85,7 @@ const Phones = (props) => {
                 <input
                   type="text"
                   name="name"
-                  className="form-control"
+                  className="form-control mx-1"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -93,7 +93,7 @@ const Phones = (props) => {
                 <input
                   type="text"
                   name="department"
-                  className="form-control"
+                  className="form-control mx-1"
                   value={values.department}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -148,8 +148,8 @@ const Phones = (props) => {
 };
 
 Phones.propTypes = {
-  data: phonePropType.isRequired,
-  isEditingId: PropTypes.string.isRequired,
+  source: phonePropType.isRequired,
+  isEditingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   edit: PropTypes.func.isRequired,
   cancelEditing: PropTypes.func.isRequired,
   submitEditing: PropTypes.func.isRequired,

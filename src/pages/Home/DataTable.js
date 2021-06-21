@@ -1,35 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { BIRTHDAYS, PHONES } from '../../constants/dataTypes';
+import { BIRTHDAYS, PHONES, USERS } from '../../constants/dataTypes';
 import Phones from './Phones';
 import Birthdays from './Birthdays';
+import User from './User';
 import phonePropType from '../../propTypes/phonePropType';
+import birthdayPropType from '../../propTypes/birthdayPropType';
+import userPropType from '../../propTypes/userPropType';
 
 const DataTable = (props) => {
-  const { data, dataType, deleteItemById } = props;
-  const [isEditingId, setIsEditingId] = useState('');
-
-  const edit = (id) => setIsEditingId(id);
-
-  const cancelEditing = (resetValues) => {
-    resetValues();
-    setIsEditingId(() => '');
-  };
-
-  const submitEditing = async (saveData) => {
-    await saveData();
-    setIsEditingId(() => '');
-  };
+  const { data, deleteItemById, isEditingId, edit, cancelEditing, submitEditing, setApiError, setData } = props;
+  const { source, type } = data;
 
   let table = null;
+  if (source?.length === 0) return table;
 
-  switch (dataType) {
+  switch (type) {
     case PHONES:
-      if (data?.length === 0) break;
-      table = data.map((phone) => (
+      table = source.map((phone) => (
         <Phones
           key={phone.id}
-          data={phone}
+          source={phone}
           isEditingId={isEditingId}
           edit={edit}
           cancelEditing={cancelEditing}
@@ -39,16 +30,30 @@ const DataTable = (props) => {
       ));
       break;
     case BIRTHDAYS:
-      if (data?.length === 0) break;
-      table = data.map((birthday) => (
+      table = source.map((birthday) => (
         <Birthdays
           key={birthday.id}
-          data={birthday}
+          source={birthday}
           isEditingId={isEditingId}
           edit={edit}
           cancelEditing={cancelEditing}
           submitEditing={submitEditing}
           deleteItemById={deleteItemById}
+        />
+      ));
+      break;
+    case USERS:
+      table = source.map((user) => (
+        <User
+          key={user.id}
+          source={user}
+          setData={setData}
+          isEditingId={isEditingId}
+          edit={edit}
+          cancelEditing={cancelEditing}
+          submitEditing={submitEditing}
+          deleteItemById={deleteItemById}
+          setApiError={setApiError}
         />
       ));
       break;
@@ -60,12 +65,22 @@ const DataTable = (props) => {
 };
 
 DataTable.propTypes = {
-  data: PropTypes.oneOfType([
-    PropTypes.array,
-    phonePropType,
-  ]).isRequired,
-  dataType: PropTypes.string.isRequired,
-  deleteItemById: PropTypes.func,
+  data: PropTypes.shape({
+    type: PropTypes.string,
+    source: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.oneOf([null]),
+      phonePropType,
+      birthdayPropType,
+      userPropType,
+    ])),
+  }).isRequired,
+  setData: PropTypes.func.isRequired,
+  deleteItemById: PropTypes.func.isRequired,
+  isEditingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  edit: PropTypes.func.isRequired,
+  cancelEditing: PropTypes.func.isRequired,
+  submitEditing: PropTypes.func.isRequired,
+  setApiError: PropTypes.func.isRequired,
 };
 
 export default DataTable;
