@@ -52,7 +52,7 @@ const User = (props) => {
       onSubmit={(newUser) => submitEditing(() => saveUser(newUser))}
     >
       {(innerProps) => {
-        const { values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = innerProps;
+        const { values, isSubmitting, handleChange, handleBlur, handleSubmit } = innerProps;
 
         const DELETE_USER_MODAL_ID = `deleteUserModalId${id}`;
         const IS_ADMIN_CHECK_ID = `isAdminCheck${id}`;
@@ -62,94 +62,88 @@ const User = (props) => {
         };
 
         return (
-          <>
-            <form
-              className="container d-flex flex-row my-1"
-              id={id}
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleSubmit({ ...source, isAdmin: values.isAdmin });
-              }}
-            >
-              <fieldset disabled={!active} className="d-flex flex-row flex-grow-1 me-1">
-                <input
-                  type="text"
-                  name="userName"
-                  className="form-control mx-1"
-                  value={userName}
-                  disabled
-                />
-                <input
-                  type="text"
-                  name="firstName"
-                  className="form-control mx-1"
-                  value={firstName}
-                  disabled
-                />
-                <input
-                  type="text"
-                  name="lastName"
-                  className="form-control mx-1"
-                  value={lastName}
-                  disabled
-                />
-                <div className="form-check form-switch">
-                  <label className="form-check-label fs-5 ms-3" htmlFor={IS_ADMIN_CHECK_ID}>
-                    <input
-                      type="checkbox"
-                      id={IS_ADMIN_CHECK_ID}
-                      className="form-check-input"
-                      checked={values.isAdmin}
-                      name="isAdmin"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    Admin
-                  </label>
-                </div>
-              </fieldset>
-              <div className="d-flex flex-row ms-1">
-                {active && (
-                  <>
-                    <Button
-                      className="btn btn-warning me-1"
-                      onClick={() => cancelEditing(resetValues)}
-                      disabled={isSubmitting}
-                    >
-                      <i className="bi bi-x-lg" />
-                    </Button>
-                    <Submit className="btn btn-success" disabled={isSubmitting}>
-                      <i className="bi bi-check-lg" />
-                    </Submit>
-                  </>
-                )}
-                {!active && loggedIn && (
-                  <>
-                    <Button className="btn btn-primary me-1" onClick={() => edit(id)}>
-                      <i className="bi bi-pencil-fill" />
-                    </Button>
-                    <ModalButton
-                      className="btn btn-danger"
-                      modalId={DELETE_USER_MODAL_ID}
-                    >
-                      <i className="bi bi-trash-fill" />
-                    </ModalButton>
-                    <Modal
-                      modalId={DELETE_USER_MODAL_ID}
-                      modalText="Are you sure?"
-                      closeButtonText="Close"
-                      submitButtonText="Delete"
-                      onSubmit={() => deleteItemById(id, USERS)}
-                    />
-                  </>
-                )}
+          <form
+            className="container d-flex flex-row my-1"
+            id={id}
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmit({ ...source, isAdmin: values.isAdmin });
+            }}
+          >
+            <fieldset disabled={!active} className="d-flex flex-row flex-grow-1 me-1">
+              <input
+                type="text"
+                name="userName"
+                className="form-control mx-1"
+                value={userName}
+                disabled
+              />
+              <input
+                type="text"
+                name="firstName"
+                className="form-control mx-1"
+                value={firstName}
+                disabled
+              />
+              <input
+                type="text"
+                name="lastName"
+                className="form-control mx-1"
+                value={lastName}
+                disabled
+              />
+              <div className="form-check form-switch">
+                <label className="form-check-label fs-5 ms-3" htmlFor={IS_ADMIN_CHECK_ID}>
+                  <input
+                    type="checkbox"
+                    id={IS_ADMIN_CHECK_ID}
+                    className="form-check-input"
+                    checked={values.isAdmin}
+                    name="isAdmin"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  Admin
+                </label>
               </div>
-            </form>
-            {touched.phone && errors.phone && <div className="input-feedback align-self-center">{errors.phone}</div>}
-            {touched.name && errors.name && <div className="input-feedback align-self-center">{errors.name}</div>}
-            {touched.department && errors.department &&
-              <div className="input-feedback align-self-center">{errors.department}</div>}
-          </>
+            </fieldset>
+            <div className="d-flex flex-row ms-1">
+              {active && (
+                <>
+                  <Button
+                    className="btn btn-warning me-1"
+                    onClick={() => cancelEditing(resetValues)}
+                    disabled={isSubmitting}
+                  >
+                    <i className="bi bi-x-lg" />
+                  </Button>
+                  <Submit className="btn btn-success" disabled={isSubmitting}>
+                    <i className="bi bi-check-lg" />
+                  </Submit>
+                </>
+              )}
+              {!active && loggedIn && (
+                <>
+                  <Button className="btn btn-primary me-1" onClick={() => edit(id)}>
+                    <i className="bi bi-pencil-fill" />
+                  </Button>
+                  <ModalButton
+                    className="btn btn-danger"
+                    modalId={DELETE_USER_MODAL_ID}
+                  >
+                    <i className="bi bi-trash-fill" />
+                  </ModalButton>
+                  <Modal
+                    modalId={DELETE_USER_MODAL_ID}
+                    modalText="Are you sure?"
+                    closeButtonText="Close"
+                    submitButtonText="Delete"
+                    onSubmit={() => deleteItemById(id, USERS)}
+                  />
+                </>
+              )}
+            </div>
+          </form>
         );
       }}
     </Formik>

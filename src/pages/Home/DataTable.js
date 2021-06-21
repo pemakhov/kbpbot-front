@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BIRTHDAYS, PHONES, USERS } from '../../constants/dataTypes';
-import Phones from './Phones';
-import Birthdays from './Birthdays';
+import Phone from './Phone';
+import Birthday from './Birthday';
 import User from './User';
 import phonePropType from '../../propTypes/phonePropType';
 import birthdayPropType from '../../propTypes/birthdayPropType';
@@ -18,7 +18,7 @@ const DataTable = (props) => {
   switch (type) {
     case PHONES:
       table = source.map((phone) => (
-        <Phones
+        <Phone
           key={phone.id}
           source={phone}
           isEditingId={isEditingId}
@@ -31,7 +31,7 @@ const DataTable = (props) => {
       break;
     case BIRTHDAYS:
       table = source.map((birthday) => (
-        <Birthdays
+        <Birthday
           key={birthday.id}
           source={birthday}
           isEditingId={isEditingId}

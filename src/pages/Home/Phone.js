@@ -13,7 +13,7 @@ import { objectsEqual } from '../../service/tools';
 import ModalButton from '../../components/Modal/ModalButton';
 import Modal from '../../components/Modal/Modal';
 
-const Phones = (props) => {
+const Phone = (props) => {
   const { source, isEditingId, edit, cancelEditing, submitEditing, deleteItemById } = props;
   const { id, phone, name, department } = source;
   const initialFormValues = { id, phone, name, department };
@@ -147,7 +147,7 @@ const Phones = (props) => {
   );
 };
 
-Phones.propTypes = {
+Phone.propTypes = {
   source: phonePropType.isRequired,
   isEditingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   edit: PropTypes.func.isRequired,
@@ -156,4 +156,4 @@ Phones.propTypes = {
   deleteItemById: PropTypes.func.isRequired,
 };
 
-export default Phones;
+export default Phone;

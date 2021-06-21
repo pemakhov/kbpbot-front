@@ -12,7 +12,7 @@ import { fetchProtectedData, getBearerToken } from '../../service/authentication
 import ModalButton from '../../components/Modal/ModalButton';
 import Modal from '../../components/Modal/Modal';
 
-const Birthdays = (props) => {
+const Birthday = (props) => {
   const { source, isEditingId, edit, cancelEditing, submitEditing, deleteItemById } = props;
   const { id, name, date, day, month, year } = source;
   const initialFormValues = { id, name, date, day, month, year };
@@ -145,7 +145,7 @@ const Birthdays = (props) => {
   );
 };
 
-Birthdays.propTypes = {
+Birthday.propTypes = {
   source: birthdaysPropType.isRequired,
   isEditingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   edit: PropTypes.func.isRequired,
@@ -154,4 +154,4 @@ Birthdays.propTypes = {
   deleteItemById: PropTypes.func.isRequired,
 };
 
-export default Birthdays;
+export default Birthday;

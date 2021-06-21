@@ -100,7 +100,7 @@ const Home = () => {
         )}
       {apiError &&
         (
-          <div className="apiError text-center">{apiError}</div>
+          <div className="apiError text-center text-danger">{apiError}</div>
         )}
       <DataTable
         data={data}
