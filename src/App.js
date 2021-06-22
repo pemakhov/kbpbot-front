@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <LoggedInContext.Provider value={{ loggedIn, logIn, logOut }}>
-      <Router>
+      <Router basename="/" hashType="noslash">
         <Switch>
           <Route path="/login">
             {loggedIn ? <Redirect to="/" /> : <LogIn />}
