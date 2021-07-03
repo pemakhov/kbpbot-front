@@ -76,9 +76,9 @@ const Phone = (props) => {
               <fieldset disabled={!active} className="d-flex flex-row flex-grow-1 me-1">
                 <input
                   type="text"
-                  name="phone"
+                  name="department"
                   className="form-control mx-1"
-                  value={values.phone}
+                  value={values.department}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -92,9 +92,9 @@ const Phone = (props) => {
                 />
                 <input
                   type="text"
-                  name="department"
+                  name="phone"
                   className="form-control mx-1"
-                  value={values.department}
+                  value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -103,7 +103,7 @@ const Phone = (props) => {
                 {active && (
                   <>
                     <Button
-                      className="btn btn-warning me-1"
+                      className="btn btn-warning me-2"
                       onClick={() => cancelEditing(resetValues)}
                       disabled={isSubmitting}
                     >
@@ -116,7 +116,7 @@ const Phone = (props) => {
                 )}
                 {!active && loggedIn && (
                   <>
-                    <Button className="btn btn-primary me-1" onClick={() => edit(id)}>
+                    <Button className="btn btn-primary me-2" onClick={() => edit(id)}>
                       <i className="bi bi-pencil-fill" />
                     </Button>
                     <ModalButton

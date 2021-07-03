@@ -103,7 +103,7 @@ const Birthday = (props) => {
                 {active && (
                   <>
                     <Button
-                      className="btn btn-warning me-1"
+                      className="btn btn-warning me-2"
                       onClick={() => cancelEditing(resetValues)}
                       disabled={isSubmitting}
                     >
@@ -116,7 +116,7 @@ const Birthday = (props) => {
                 )}
                 {!active && loggedIn && (
                   <>
-                    <Button className="btn btn-primary me-1" onClick={() => edit(id)}>
+                    <Button className="btn btn-primary me-2" onClick={() => edit(id)}>
                       <i className="bi bi-pencil-fill" />
                     </Button>
                     <ModalButton
